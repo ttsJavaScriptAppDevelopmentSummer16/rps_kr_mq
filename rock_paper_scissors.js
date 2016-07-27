@@ -9,26 +9,47 @@ function playerOneWins(p1, p2) {
   return test;
 }
 
-var weapons = ["rock", "paper", "scissors"];
+function getHand(){
+  var weapons = ["rock", "paper", "scissors"];
+  return weapons[sample(3)];
+}
 
-var playerOneScore = 0;
-var playerTwoScore = 0;
+var playerOne = {
+  name: "James",
+  getHand: function(){
+    var weapons = ["rock", "paper", "scissors"];
+    return weapons[sample(3)];
+  },
+  score: 0
+}
 
-var playerOneWeapon = weapons[sample(3)];
-var playerTwoWeapon = weapons[sample(3)];
+var playerTwo = {
+  name: "Kevin",
+  getHand: function(){
+    var weapons = ["rock", "paper", "scissors"];
+    return weapons[sample(3)];
+  },
+  score: 0
+}
 
-while (playerOneScore < 3 && playerTwoScore < 3) {
-  var playerOneWeapon = weapons[sample(3)];
-  var playerTwoWeapon = weapons[sample(3)];
-  console.log("Player One chooses " + playerOneWeapon + ".")
-  console.log("Player Two chooses " + playerTwoWeapon + ".")
+function playRound(p1, p2){
+  var playerOneWeapon = p1.getHand();
+  var playerTwoWeapon = p2.getHand();
   if (playerOneWeapon === playerTwoWeapon) {
-    console.log("Players have tied.")
+    return null;
   } else if (playerOneWins(playerOneWeapon, playerTwoWeapon)) {
-    playerOneScore++;
-    console.log("Player One wins, with a total score of " + playerOneScore + ".");
+    p1.score++;
+    return p1;
   } else {
-    playerTwoScore++;
-    console.log("Player Two wins, with a total score of " + playerTwoScore + ".");
+    p2.score++;
+    return p2;
   }
 }
+
+function playGame(player1, player2, playUntil){
+  while (player1.score < playUntil && player2.score < playUntil) {
+    playRound(player1, player2)
+  }
+}
+
+playGame(playerOne,playerTwo,5);
